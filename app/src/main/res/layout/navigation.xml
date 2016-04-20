@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--左侧导航栏-->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="match_parent"
+    android:background="#fff"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:background="@color/colorPrimary"
+        android:paddingBottom="10dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/img_main_userIcon"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/da8e974dc_r"/>
+
+        <TextView
+            android:layout_alignLeft="@id/img_main_userIcon"
+            android:layout_alignParentBottom="true"
+            android:id="@+id/tv_main_userName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="10dp"
+            android:text="fjlksjfkl"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"/>
+
+        <ImageView
+            android:padding="10dp"
+            android:id="@+id/img_main_exitLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@id/img_main_userIcon"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/ic_drawer_logout"/>
+    </RelativeLayout>
+
+    <TextView
+        android:layout_marginTop="5dp"
+        android:id="@+id/tv_main_drawerCourse"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:text="二手市场"
+        android:textSize="16sp"/>
+
+
+    <TextView
+        android:layout_marginTop="5dp"
+        android:id="@+id/tv_main_drawerMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:text="发布"
+        android:textSize="16sp"/>
+
+    <ImageView
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?attr/colorButtonNormal"/>
+
+    <TextView
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:text="已有课程"
+        android:textColor="?attr/colorButtonNormal"
+        android:textSize="16sp"
+        android:visibility="gone"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/list_main_drawer_course"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
+</LinearLayout>

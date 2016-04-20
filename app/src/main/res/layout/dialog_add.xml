@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+
+    <TextView
+        android:id="@+id/tv_addDialog_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:text="加入班级"
+        android:textSize="18sp"/>
+
+    <EditText
+        android:id="@+id/et_addDialog_courseName"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_addDialog_title"
+        android:layout_marginTop="10dp"
+        android:hint="请输入班级邀请码"
+        android:textCursorDrawable="@color/colorPrimary"
+        android:textSize="14sp"/>
+
+    <Button
+        android:id="@+id/btn_addDialog_create"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@id/et_addDialog_courseName"
+        android:layout_below="@id/et_addDialog_courseName"
+        android:text="加入"
+        android:textSize="14sp"/>
+
+
+    <Button
+        android:id="@+id/btn_addDialog_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/et_addDialog_courseName"
+        android:layout_toLeftOf="@id/btn_addDialog_create"
+        android:text="取消"
+        android:textSize="14sp"/>
+
+
+</RelativeLayout>

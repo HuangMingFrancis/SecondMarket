@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:padding="20dp"
+              >
+
+    <ImageView
+        android:layout_centerVertical="true"
+        android:id="@+id/img_nev_course_circle"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:layout_weight="1"
+        android:src="@drawable/umeng_socialize_follow_off"/>
+
+    <TextView
+        android:layout_marginLeft="8dp"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/img_nev_course_circle"
+        android:id="@+id/tv_item_drawerCourseName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="3121"
+        android:textSize="16sp"/>
+</RelativeLayout>

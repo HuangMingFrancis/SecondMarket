@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <array name="course_tabs">
+        <item>作业</item>
+        <item>资料</item>
+        <item>公告</item>
+        <item>测试</item>
+    </array>
+
+    <array name="search_tabs">
+        <item>作业</item>
+        <item>公告</item>
+        <item>测试</item>
+    </array>
+</resources>

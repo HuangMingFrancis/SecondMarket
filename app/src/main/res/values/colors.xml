@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#3F51B5</color>
+
+    <!--mainActivity -->
+    <color name="colorBottomTextNoSelected">#000</color>
+    <color name="colorBottomTextSelected">#3F51B5</color>
+
+    <color name="colorNormalText">#d6d7d7</color>
+
+    <color name="colorPrimaryLight">#d3e5f5</color>
+
+
+    <color name="trans">#00000000</color>
+    <color name="black">#000000</color>
+    <color name="alertdialog_line">#c6c6c6</color>
+    <color name="actionsheet_blue">#037BFF</color>
+    <color name="actionsheet_red">#FD4A2E</color>
+    <color name="actionsheet_gray">#8F8F8F</color>
+
+
+</resources>

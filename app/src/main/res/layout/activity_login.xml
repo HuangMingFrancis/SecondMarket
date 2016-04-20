@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+    >
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/img_login_logo"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/da8e974dc_r"/>
+
+    <EditText
+        android:id="@+id/et_login_name"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/img_login_logo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/et_login_backgroud"
+        android:drawablePadding="5dp"
+        android:gravity="center_vertical"
+        android:hint="@string/loginName"
+        android:maxLines="1"
+        android:textSize="16sp"/>
+
+    <EditText
+        android:id="@+id/et_login_password"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/et_login_name"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/et_login_backgroud"
+        android:drawablePadding="5dp"
+        android:gravity="center_vertical"
+        android:hint="@string/loginPassword"
+        android:maxLines="1"
+        android:textSize="16sp"/>
+
+    <Button
+        android:id="@+id/btn_login_login"
+
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/et_login_password"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/btn_login_backgroud"
+        android:text="@string/loginBtn"
+        android:textColor="#ffffff"
+        android:textSize="16sp"/>
+
+
+    <TextView
+        android:id="@+id/tv_login_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@id/btn_login_login"
+        android:layout_below="@id/btn_login_login"
+        android:layout_marginTop="10dp"
+        android:text="@string/loginRegister"
+        android:textColor="@android:color/holo_blue_light"
+        android:textSize="14sp"/>
+
+
+</RelativeLayout>

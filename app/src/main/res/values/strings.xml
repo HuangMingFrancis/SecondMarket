@@ -1,0 +1,56 @@
+<resources>
+    <string name="app_name">Ketangpai</string>
+
+    <!--loginActivity!-->
+    <string name="loginName">账号</string>
+    <string name="loginPassword">密码</string>
+    <string name="loginBtn">登录</string>
+    <string name="loginRegister">快速注册</string>
+    <string name="AutoLogin">下次自动登录</string>
+
+    <!--mainActivity-->
+    <string name="drawer_open">open</string>
+    <string name="drawer_close">close</string>
+    <string name="main_course">课程</string>
+    <string name="main_message">私信</string>
+    <!--商品一级分类-->
+    <array name="first_level">
+        <item>电子产品</item>
+        <item>衣服</item>
+        <item>书籍</item>
+        <item>化妆</item>
+        <item>饰品</item>
+        <item>箱包</item>
+    </array>
+    <!--各类子集-->
+    <array name="electronic_product">
+        <item>手机</item>
+        <item>笔记本</item>
+        <item>平板</item>
+    </array>
+    <array name="cloth_product">
+        <item>长袖</item>
+        <item>短袖</item>
+        <item>裙子</item>
+    </array>
+    <array name="book_product">
+        <item>计算机类</item>
+        <item>科技类</item>
+        <item>美食类</item>
+    </array>
+    <array name="makeup_product">
+        <item>洗面奶</item>
+        <item>指甲油</item>
+        <item>面膜</item>
+    </array>
+    <array name="ornaments_product">
+        <item>项链</item>
+        <item>戒指</item>
+        <item>手环</item>
+    </array>
+    <array name="bags_product">
+        <item>书包</item>
+        <item>行李箱</item>
+        <item>挎包</item>
+    </array>
+</resources>
