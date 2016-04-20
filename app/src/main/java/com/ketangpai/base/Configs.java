@@ -51,6 +51,8 @@ public class Configs {
     public static final String SEARCH_GOODS=URL+"searchgoods";
     //查询所有聊天信息
     public static final String QUERY_ALL_MESSAGE=URL+"querymessages";
+    //删除聊天信息
+    public static final String DELETE_MESSAGE=URL+"deletemessage";
 
     //请求出错
     public static final String URLERROR="网络请求出错,请检查!";

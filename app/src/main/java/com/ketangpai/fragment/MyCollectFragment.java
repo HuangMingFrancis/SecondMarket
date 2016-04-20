@@ -1,7 +1,9 @@
 package com.ketangpai.fragment;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -18,6 +20,7 @@ import com.ketangpai.base.Configs;
 import com.ketangpai.entity.CollectInfo;
 import com.ketangpai.entity.GoodsInfo;
 import com.ketangpai.listener.OnItemClickListener;
+import com.ketangpai.listener.OnItemLongClickListener;
 import com.ketangpai.nan.ketangpai.R;
 import com.ketangpai.utils.OkHttpClientManager;
 import com.squareup.okhttp.Request;
@@ -82,9 +85,7 @@ public class MyCollectFragment extends BaseFragment {
                         collectInfo=new Gson().fromJson(jsonObject.toString(),CollectInfo.class);
                         collectInfos.add(collectInfo);
                     }
-                    Log.i("ming","collectInfos:  "+collectInfos.size());
                     getGoodsList();
-//                    initCollectList();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -108,6 +109,24 @@ public class MyCollectFragment extends BaseFragment {
                 Intent intent=new Intent(getActivity(), GoodDesActivity.class);
                 intent.putExtra("goodsinfo",goodsInfos.get(position));
                 startActivity(intent);
+            }
+        });
+        //长按item弹出对话框是否删除收藏记录
+        collectAdapter.setOnItemLongClickListener(new OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(View view, final int position) {
+                AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
+                builder.setTitle("提示");
+                builder.setMessage("是否删除该条收藏?");
+                builder.setNegativeButton("取消",null);
+                builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        deleteMyCollect(goodsInfos.get(position));
+                    }
+                });
+                builder.create().show();
+                return true;
             }
         });
 
@@ -167,6 +186,27 @@ public class MyCollectFragment extends BaseFragment {
             },new OkHttpClientManager.Param("goods_no",collectInfo.getGoods_no()));
         }
 
+    }
+    //删除我的收藏
+    private void deleteMyCollect(final GoodsInfo goodsInfo){
+        OkHttpClientManager.postAsyn(Configs.DELETECOLLECT, new OkHttpClientManager.ResultCallback<String>() {
+            @Override
+            public void onError(Request request, Exception e) {
+                Toast.makeText(getActivity(),Configs.URLERROR,Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onResponse(String response) {
+                if (response.equals("1")){
+                    goodsInfos.remove(goodsInfo);
+                    initCollectList();
+                }
+
+            }
+        },new OkHttpClientManager.Param[]{
+                new OkHttpClientManager.Param("goods_no",String.valueOf(goodsInfo.getGoods_no())),
+                new OkHttpClientManager.Param("user_name",getActivity().getSharedPreferences("user",0).getString("user_name",""))
+        });
     }
 
 }

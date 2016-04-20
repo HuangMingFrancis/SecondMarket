@@ -1,7 +1,9 @@
 package com.ketangpai.fragment;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -16,6 +18,7 @@ import com.ketangpai.base.BaseFragment;
 import com.ketangpai.base.Configs;
 import com.ketangpai.entity.MessageInfo;
 import com.ketangpai.listener.OnItemClickListener;
+import com.ketangpai.listener.OnItemLongClickListener;
 import com.ketangpai.nan.ketangpai.R;
 import com.ketangpai.utils.OkHttpClientManager;
 import com.squareup.okhttp.Request;
@@ -39,9 +42,8 @@ import java.util.List;
 public class MyNotifyFragment extends BaseFragment implements View.OnClickListener{
     private RecyclerView recycler_my_notify;
     private TextView tv_hint_my_notify;
-    private ArrayList<MessageInfo> messageInfos;
+    private ArrayList<MessageInfo> messageInfos,data;
     private MessagesInfoAdapter messagesInfoAdapter;
-    private ArrayList<ArrayList<MessageInfo>> messagesList;
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_my_collect;
@@ -57,9 +59,9 @@ public class MyNotifyFragment extends BaseFragment implements View.OnClickListen
 
     @Override
     protected void initData() {
-        getMessageInfo();
         messageInfos=new ArrayList<>();
-        messagesList=new ArrayList<>();
+        data=new ArrayList<>();
+        getMessageInfo();
     }
 
     @Override
@@ -125,20 +127,25 @@ public class MyNotifyFragment extends BaseFragment implements View.OnClickListen
                         messageInfo=new Gson().fromJson(jsonObject.toString(),MessageInfo.class);
                         messageInfos.add(messageInfo);
                     }
-                    ArrayList<MessageInfo> messageInfos1=new ArrayList<MessageInfo>();
-                    messageInfos1.add(messageInfos.get(0));
+                    Log.i("ming","messageInfos:　"+messageInfos.size());
+                    if (!(messageInfos.size()>0)){
+                        initMessagesList();
+                        return;
+                    }
+                    data.add(messageInfos.get(0));
                     for (int i=0;i<messageInfos.size();i++){
                         boolean exist=false;
                         messageInfo=messageInfos.get(i);
-                        for (int j=0;j<messageInfos1.size();j++){
-                            if (messageInfo.getSend_user_name().equals(messageInfos1.get(j).getSend_user_name())){
+                        for (int j=0;j<data.size();j++){
+                            if (messageInfo.getSend_user_name().equals(data.get(j).getSend_user_name())){
                                 exist=true;
                             }
                         }
                         if (!exist)
-                            messageInfos1.add(messageInfo);
+                            data.add(messageInfo);
                     }
-                    initMessagesList(messageInfos1);
+                    Log.i("ming","data:  "+data.size());
+                    initMessagesList();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -148,8 +155,8 @@ public class MyNotifyFragment extends BaseFragment implements View.OnClickListen
 
     }
 
-    private void initMessagesList(final ArrayList<MessageInfo> data){
-        if (data.size()<0){
+    private void initMessagesList(){
+        if (data.size()<=0){
             tv_hint_my_notify.setVisibility(View.VISIBLE);
             recycler_my_notify.setVisibility(View.GONE);
             return;
@@ -168,6 +175,23 @@ public class MyNotifyFragment extends BaseFragment implements View.OnClickListen
                     Intent intent=new Intent(getActivity(), MyNotificationDesActivity.class);
                     intent.putExtra("receiver_user_name", data.get(position).getSend_user_name());
                     getActivity().startActivity(intent);
+                }
+            });
+            messagesInfoAdapter.setOnItemLongClickListener(new OnItemLongClickListener() {
+                @Override
+                public boolean onItemLongClick(View view, final int position) {
+                    AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
+                    builder.setTitle("提示");
+                    builder.setMessage("是否删除该聊天记录?");
+                    builder.setNegativeButton("取消",null);
+                    builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            deleteMyMessage(data.get(position));
+                        }
+                    });
+                    builder.create().show();
+                    return true;
                 }
             });
 
@@ -205,6 +229,28 @@ public class MyNotifyFragment extends BaseFragment implements View.OnClickListen
             }
         }
         return data;
+    }
+
+    //删除聊天记录
+    private void deleteMyMessage(final MessageInfo messageInfo){
+        OkHttpClientManager.postAsyn(Configs.DELETE_MESSAGE, new OkHttpClientManager.ResultCallback<String>() {
+            @Override
+            public void onError(Request request, Exception e) {
+                Toast.makeText(getActivity(),Configs.URLERROR,Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onResponse(String response) {
+                if (!response.equals("0")){
+                    Log.i("ming","onResponse  data:  "+data.size());
+                    data.remove(messageInfo);
+                    initMessagesList();
+                }
+            }
+        },new OkHttpClientManager.Param[]{
+                new OkHttpClientManager.Param("send_user_name",messageInfo.getSend_user_name()),
+                new OkHttpClientManager.Param("receive_user_name",messageInfo.getReceive_user_name())
+        });
     }
 
 
