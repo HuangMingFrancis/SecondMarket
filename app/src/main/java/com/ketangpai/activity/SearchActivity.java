@@ -160,13 +160,6 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                 startActivity(intent);
             }
         });
-        goodsAdapter.setOnItemLongClickListener(new OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(View view, int position) {
-                Toast.makeText(getApplication(),"hello",Toast.LENGTH_SHORT).show();
-                return true;
-            }
-        });
     }
 
     class GoodsAdapter extends BaseAdapter<GoodsInfo>{

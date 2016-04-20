@@ -97,6 +97,7 @@ public abstract class BaseAdapter<E> extends RecyclerView.Adapter<BaseAdapter.Vi
         public ViewHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
+            itemView.setOnLongClickListener(this);
             mViews = new SparseArray<View>();
         }
 
@@ -119,9 +120,9 @@ public abstract class BaseAdapter<E> extends RecyclerView.Adapter<BaseAdapter.Vi
         @Override
         public boolean onLongClick(View v) {
             if (getOnItemLongClickListener()!=null){
-               return getOnItemLongClickListener().onItemLongClick(v,getPosition());
+              getOnItemLongClickListener().onItemLongClick(v,getPosition());
             }
-            return false;
+            return true;
         }
     }
 }
