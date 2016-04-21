@@ -3,10 +3,12 @@ package com.ketangpai.fragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,8 +41,9 @@ import java.util.List;
 /**
  * Created by Francis on 2016/4/16.
  */
-public class MyNotifyFragment extends BaseFragment implements View.OnClickListener{
+public class MyNotifyFragment extends BaseFragment implements View.OnClickListener,SwipeRefreshLayout.OnRefreshListener{
     private RecyclerView recycler_my_notify;
+    private SwipeRefreshLayout swipe_notify_list;
     private TextView tv_hint_my_notify;
     private ArrayList<MessageInfo> messageInfos,data;
     private MessagesInfoAdapter messagesInfoAdapter;
@@ -54,18 +57,28 @@ public class MyNotifyFragment extends BaseFragment implements View.OnClickListen
         recycler_my_notify=(RecyclerView)view.findViewById(R.id.recycle_my_collect);
         tv_hint_my_notify=(TextView)view.findViewById(R.id.tv_hint_my_collect);
         tv_hint_my_notify.setText("目前还没有任何消息");
+        swipe_notify_list=(SwipeRefreshLayout)view.findViewById(R.id.swipe_collect_list);
+
+        swipe_notify_list.setColorSchemeColors(R.color.red, R.color.blue, R.color.green,R.color.yellow);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recycler_my_notify.setLayoutManager(layoutManager);
 
     }
 
     @Override
     protected void initData() {
-        messageInfos=new ArrayList<>();
-        data=new ArrayList<>();
+
         getMessageInfo();
     }
 
     @Override
     protected void initListener() {
+        swipe_notify_list.setOnRefreshListener(this);
+        // 这句话是为了，第一次进入页面的时候显示加载进度条
+        swipe_notify_list.setProgressViewOffset(false, 0, (int) TypedValue
+                .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources()
+                        .getDisplayMetrics()));
     }
 
     @Override
@@ -110,6 +123,9 @@ public class MyNotifyFragment extends BaseFragment implements View.OnClickListen
     }
 
     private void getMessageInfo(){
+        messageInfos=new ArrayList<>();
+        data=new ArrayList<>();
+        swipe_notify_list.setRefreshing(true);
         OkHttpClientManager.postAsyn(Configs.QUERY_ALL_MESSAGE, new OkHttpClientManager.ResultCallback<String>() {
             @Override
             public void onError(Request request, Exception e) {
@@ -156,6 +172,7 @@ public class MyNotifyFragment extends BaseFragment implements View.OnClickListen
     }
 
     private void initMessagesList(){
+        swipe_notify_list.setRefreshing(false);
         if (data.size()<=0){
             tv_hint_my_notify.setVisibility(View.VISIBLE);
             recycler_my_notify.setVisibility(View.GONE);
@@ -197,6 +214,12 @@ public class MyNotifyFragment extends BaseFragment implements View.OnClickListen
 
         }
     }
+
+    @Override
+    public void onRefresh() {
+        getMessageInfo();
+    }
+
     class MessagesInfoAdapter extends BaseAdapter<MessageInfo> {
 
         public MessagesInfoAdapter(Context mContext, List mDataList) {

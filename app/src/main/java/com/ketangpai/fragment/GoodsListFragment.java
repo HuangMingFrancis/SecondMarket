@@ -3,9 +3,11 @@ package com.ketangpai.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -33,9 +35,10 @@ import java.util.List;
 /**
  * Created by Francis on 2016/4/14.
  */
-public class GoodsListFragment extends BaseFragment{
+public class GoodsListFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener{
     public static final  int GETGOODSLIST=100;
     private RecyclerView recycler_goods;
+    private SwipeRefreshLayout swipe_goods_list;
     private ArrayList<GoodsInfo> goodsInfos;
     private GoodsAdapter goodsAdapter;
     private ArrayList<CollectInfo> collectInfos;
@@ -48,6 +51,13 @@ public class GoodsListFragment extends BaseFragment{
     @Override
     protected void initView() {
         recycler_goods=(RecyclerView)view.findViewById(R.id.recycler_goods);
+        swipe_goods_list=(SwipeRefreshLayout)view.findViewById(R.id.swipe_goods_list);
+
+        swipe_goods_list.setColorSchemeColors(R.color.red, R.color.blue, R.color.green,R.color.yellow);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recycler_goods.setLayoutManager(layoutManager);
+
 
     }
 
@@ -61,6 +71,12 @@ public class GoodsListFragment extends BaseFragment{
 
     @Override
     protected void initListener() {
+        swipe_goods_list.setOnRefreshListener(this);
+        // 这句话是为了，第一次进入页面的时候显示加载进度条
+        swipe_goods_list.setProgressViewOffset(false, 0, (int) TypedValue
+                .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources()
+                        .getDisplayMetrics()));
+
     }
 
     @Override
@@ -111,6 +127,14 @@ public class GoodsListFragment extends BaseFragment{
         });
 
     }
+    //下拉刷新
+    @Override
+    public void onRefresh() {
+        goodsInfos=new ArrayList<>();
+        getGoodsList(goods_type);
+        getCollectInfo();
+    }
+
     class GoodsAdapter extends BaseAdapter<GoodsInfo> {
         public GoodsAdapter(Context mContext, List<GoodsInfo> mDataList) {
             super(mContext, mDataList);
@@ -233,6 +257,7 @@ public class GoodsListFragment extends BaseFragment{
                         collectInfo=new Gson().fromJson(jsonObject.toString(),CollectInfo.class);
                         collectInfos.add(collectInfo);
                     }
+                    swipe_goods_list.setRefreshing(false);
                     initGoodsList();
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -245,6 +270,7 @@ public class GoodsListFragment extends BaseFragment{
     public void onResume() {
         super.onResume();
         goodsInfos=new ArrayList<>();
+        swipe_goods_list.setRefreshing(true);
         getGoodsList(goods_type);
         getCollectInfo();
     }

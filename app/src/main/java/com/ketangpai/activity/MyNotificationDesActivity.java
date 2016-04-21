@@ -2,9 +2,11 @@ package com.ketangpai.activity;
 
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -96,7 +98,6 @@ public class MyNotificationDesActivity extends BaseActivity implements View.OnCl
     protected void initView() {
         mSendtBtn = (ImageView) findViewById(R.id.img_chat_send);
         mSendTextEt = (EditText) findViewById(R.id.et_chat_sendText);
-
     }
 
     @Override

@@ -3,10 +3,12 @@ package com.ketangpai.fragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -35,9 +37,10 @@ import java.util.List;
 /**
  * Created by Francis on 2016/4/15.
  */
-public class MyCollectFragment extends BaseFragment {
+public class MyCollectFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener{
     private TextView tv_hint_my_collect;
     private RecyclerView recycler_my_collect;
+    private SwipeRefreshLayout swipe_collect_list;
     private ArrayList<CollectInfo> collectInfos;
     private ArrayList<GoodsInfo> goodsInfos;
     private CollectAdapter collectAdapter;
@@ -50,17 +53,23 @@ public class MyCollectFragment extends BaseFragment {
     protected void initView() {
         tv_hint_my_collect=(TextView)view.findViewById(R.id.tv_hint_my_collect);
         recycler_my_collect=(RecyclerView)view.findViewById(R.id.recycle_my_collect);
+        swipe_collect_list=(SwipeRefreshLayout)view.findViewById(R.id.swipe_collect_list);
+        swipe_collect_list.setVisibility(View.VISIBLE);
+        swipe_collect_list.setColorSchemeColors(R.color.colorPrimary);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recycler_my_collect.setLayoutManager(layoutManager);
     }
 
     @Override
     protected void initData() {
-        collectInfos=new ArrayList<>();
         getCollect();
     }
 
     @Override
     protected void initListener() {
-
+        swipe_collect_list.setOnRefreshListener(this);
     }
 
     @Override
@@ -68,6 +77,9 @@ public class MyCollectFragment extends BaseFragment {
 
     }
     private void getCollect(){
+        Log.i("ming","getCollect");
+        collectInfos=new ArrayList<>();
+        swipe_collect_list.setRefreshing(true);
         OkHttpClientManager.postAsyn(Configs.GETCOLLECT, new OkHttpClientManager.ResultCallback<String>() {
             @Override
             public void onError(Request request, Exception e) {
@@ -76,6 +88,7 @@ public class MyCollectFragment extends BaseFragment {
 
             @Override
             public void onResponse(String response) {
+                Log.i("ming","getCollect    onResponse:  "+response);
                 try {
                     JSONArray jsonArray = new JSONArray(response);
                     JSONObject jsonObject;
@@ -85,7 +98,12 @@ public class MyCollectFragment extends BaseFragment {
                         collectInfo=new Gson().fromJson(jsonObject.toString(),CollectInfo.class);
                         collectInfos.add(collectInfo);
                     }
+                    if (collectInfos.size()>0)
                     getGoodsList();
+                    else {
+                        swipe_collect_list.setRefreshing(false);
+                        return;
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -93,13 +111,14 @@ public class MyCollectFragment extends BaseFragment {
         }, new OkHttpClientManager.Param("user_name", getActivity().getSharedPreferences("user",0).getString("user_name","")));
     }
     private void initCollectList(){
+        swipe_collect_list.setRefreshing(false);
         if (collectInfos.size()>0){
             tv_hint_my_collect.setVisibility(View.GONE);
             recycler_my_collect.setVisibility(View.VISIBLE);
         }
         Log.i("ming","initCollectList:  "+goodsInfos.size());
         collectAdapter=new CollectAdapter(getActivity(),goodsInfos);
-        recycler_my_collect.setLayoutManager(new LinearLayoutManager(getActivity()));
+//        recycler_my_collect.setLayoutManager(new LinearLayoutManager(getActivity()));
         recycler_my_collect.setAdapter(collectAdapter);
 
         //item点击事件
@@ -131,6 +150,11 @@ public class MyCollectFragment extends BaseFragment {
         });
 
 
+    }
+
+    @Override
+    public void onRefresh() {
+        getCollect();
     }
 
     class CollectAdapter extends BaseAdapter<GoodsInfo> {
@@ -165,6 +189,7 @@ public class MyCollectFragment extends BaseFragment {
     }
     //由收藏列表获得商品列表
     private void getGoodsList(){
+        Log.i("ming","getGoodsList:  ");
         goodsInfos=new ArrayList<>();
         for (final CollectInfo collectInfo: collectInfos){
             Log.i("ming","collectinfo user_no :  "+collectInfos.get(0).getGoods_no());
@@ -176,7 +201,7 @@ public class MyCollectFragment extends BaseFragment {
 
                 @Override
                 public void onResponse(String response) {
-                    Log.i("ming","response:  "+response);
+                    Log.i("ming","getGoodsList  response:  "+response);
                     GoodsInfo goodsInfo=new Gson().fromJson(response,GoodsInfo.class);
                     goodsInfos.add(goodsInfo);
                     Log.i("ming","goodsInfos in ok:  "+goodsInfos.size());

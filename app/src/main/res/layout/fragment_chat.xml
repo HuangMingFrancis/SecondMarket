@@ -29,13 +29,14 @@
             android:layout_marginLeft="5dp"
             android:src="@drawable/ic_send_default"/>
     </LinearLayout>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/list_chat"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/ll_chat_sendContainer"
+            android:layout_below="@id/toolbar_container"
+            android:padding="10dp"></android.support.v7.widget.RecyclerView>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/list_chat"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/ll_chat_sendContainer"
-        android:layout_below="@id/toolbar_container"
-        android:padding="10dp"></android.support.v7.widget.RecyclerView>
+
 
 </RelativeLayout>
