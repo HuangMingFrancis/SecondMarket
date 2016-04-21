@@ -88,16 +88,16 @@
             android:textSize="16sp"
             android:layout_marginLeft="15dp"
             android:textColor="@color/colorPrimary"/>
-        <GridView
+        <com.ketangpai.view.GridViewForScrollView
             android:layout_marginLeft="15dp"
             android:layout_marginTop="5dp"
             android:id="@+id/gv_img"
             android:verticalSpacing="5dp"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="wrap_content"
             android:numColumns="3">
 
-        </GridView>
+        </com.ketangpai.view.GridViewForScrollView>
     <!--<LinearLayout
         android:layout_marginTop="5dp"
         android:layout_width="match_parent"

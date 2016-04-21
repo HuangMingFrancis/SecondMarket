@@ -30,6 +30,7 @@ import com.ketangpai.adapter.NotificationAdapter;
 import com.ketangpai.base.Configs;
 import com.ketangpai.base.DrawerBaseActivity;
 import com.ketangpai.fragment.MainFragment;
+import com.ketangpai.fragment.MarketFragment;
 import com.ketangpai.listener.OnItemClickListener;
 import com.ketangpai.fragment.MainCourseFragment;
 import com.ketangpai.fragment.ReleaseFragment;
@@ -363,4 +364,12 @@ public class MainActivity extends DrawerBaseActivity implements View.OnClickList
             return;
         }
     }
+    //商品发布成功后替换fragment
+    public void changeFragment(){
+        setmCurrentFragment(new MarketFragment());
+        int type = DrawerBaseActivity.COURSE;
+        mMainFragment.changeText(type);
+        selectNevigationText(type);
+    }
+
 }

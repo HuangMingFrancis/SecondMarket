@@ -85,6 +85,7 @@ public class GoodsListFragment extends BaseFragment implements SwipeRefreshLayou
     }
 
     private void getGoodsList(String goods_type){
+        Log.i("ming","goods_type:  "+goods_type);
         OkHttpClientManager.postAsyn(Configs.QUERYGOODS_BY_GOODSCATEGORY, new OkHttpClientManager.ResultCallback<String>() {
             @Override
             public void onError(Request request, Exception e) {
@@ -93,6 +94,7 @@ public class GoodsListFragment extends BaseFragment implements SwipeRefreshLayou
 
             @Override
             public void onResponse(String response) {
+                Log.i("ming","goods:  "+response);
                 try {
                     JSONArray jsonArray = new JSONArray(response);
                     JSONObject jsonObject;
@@ -109,7 +111,7 @@ public class GoodsListFragment extends BaseFragment implements SwipeRefreshLayou
                     e.printStackTrace();
                 }
             }
-        },new OkHttpClientManager.Param("goods_category_no","ming"));
+        },new OkHttpClientManager.Param("goods_category_no",goods_type));
     }
     private void initGoodsList(){
         goodsAdapter=new GoodsAdapter(getActivity(),goodsInfos);

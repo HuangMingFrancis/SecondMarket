@@ -2,9 +2,11 @@ package com.ketangpai.fragment;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Base64;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -22,15 +24,19 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.ketangpai.activity.ChatActivity;
+import com.ketangpai.activity.MainActivity;
 import com.ketangpai.base.BaseFragment;
 import com.ketangpai.base.Configs;
 import com.ketangpai.nan.ketangpai.R;
 import com.ketangpai.utils.FileTools;
 import com.ketangpai.utils.OkHttpClientManager;
 import com.ketangpai.utils.SelectHeadTools;
+import com.ketangpai.view.GridViewForScrollView;
 import com.squareup.okhttp.Request;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -48,7 +54,7 @@ public class ReleaseFragment extends BaseFragment implements ExpandableListView.
 
     private Spinner spin_type,spin_second_type;
     private EditText et_goods_name,et_goods_price,et_goods_des;
-    private GridView gv_img;
+    private GridViewForScrollView gv_img;
     private Uri photoUri = null;
     private ArrayList<ImageView> imageViewArrayList;
     private ArrayList<Bitmap> bitmapArrayList;
@@ -66,7 +72,13 @@ public class ReleaseFragment extends BaseFragment implements ExpandableListView.
             switch (msg.what){
                 case INSERTGOODS:
                     if (msg.obj!=null){
-                        showToast(msg.obj.toString());
+                        if (msg.obj.toString().equals("1")){
+                            Toast.makeText(getActivity(),"商品发布成功",Toast.LENGTH_SHORT).show();
+                            et_goods_price.setText("");
+                            et_goods_des.setText("");
+                            et_goods_name.setText("");
+                            ((MainActivity)getActivity()).changeFragment();
+                        }
                     }
                     break;
                 case INSERTGOODSIMGS:
@@ -88,7 +100,7 @@ public class ReleaseFragment extends BaseFragment implements ExpandableListView.
         et_goods_des=(EditText)view.findViewById(R.id.et_goods_des);
         et_goods_name=(EditText)view.findViewById(R.id.et_goods_name);
         et_goods_price=(EditText)view.findViewById(R.id.et_goods_price);
-        gv_img=(GridView)view.findViewById(R.id.gv_img);
+        gv_img=(GridViewForScrollView) view.findViewById(R.id.gv_img);
         sv_release=(ScrollView)view.findViewById(R.id.sv_release);
         tv_add_image=(TextView)view.findViewById(R.id.tv_add_image);
         btn_release=(Button)view.findViewById(R.id.btn_release);
@@ -129,14 +141,15 @@ public class ReleaseFragment extends BaseFragment implements ExpandableListView.
 //        mMessageExList.setOnChildClickListener(this);
         tv_add_image.setOnClickListener(this);
 
-        gv_img.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                ((ViewGroup)sv_release).requestDisallowInterceptTouchEvent(true);
-                return false;
-            }
-        });
+//        gv_img.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                ((ViewGroup)sv_release).requestDisallowInterceptTouchEvent(true);
+//                return false;
+//            }
+//        });
         spin_type.setOnItemSelectedListener(this);
+        spin_second_type.setOnItemSelectedListener(this);
         btn_release.setOnClickListener(this);
     }
 
@@ -227,7 +240,11 @@ public class ReleaseFragment extends BaseFragment implements ExpandableListView.
                     if (entry.getKey().equals(first_type[position]))
                         second_type=entry.getValue();
                 }
+                goods_category_no=second_type[0];
                 setSpinSecondType();
+                break;
+            case R.id.spin_second_type:
+                goods_category_no=second_type[position];
                 break;
         }
     }
@@ -246,14 +263,14 @@ public class ReleaseFragment extends BaseFragment implements ExpandableListView.
             return;
         }
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
-        String url="http://192.168.253.1:8080/Taobao/insertgoods?goods_name="+et_goods_name.getText().toString()+"&goods_category_no="+goods_category_no+
-                "&goods_price="+et_goods_price.getText().toString()+"&goods_publisher="+mContext.getSharedPreferences("user",0).getString("user_name","")+
-                "&goods_publish_date="+df.format(new Date())+"&goods_des="+et_goods_des.getText().toString()+"&goods_trading_status=0&goods_trading_date=0";
-        Log.i("ming","url:　"+url);
+        ArrayList<String> images=new ArrayList<>();
+        for (Bitmap bitmap:bitmapArrayList){
+            images.add(Configs.bitmapToBase64(bitmap));
+        }
         OkHttpClientManager.postAsyn(Configs.RELEASE_GOODS, new OkHttpClientManager.ResultCallback<String>() {
             @Override
             public void onError(Request request, Exception e) {
-
+                Toast.makeText(getActivity(),Configs.URLERROR,Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -267,11 +284,12 @@ public class ReleaseFragment extends BaseFragment implements ExpandableListView.
                 new OkHttpClientManager.Param("goods_name",et_goods_name.getText().toString()),
                 new OkHttpClientManager.Param("goods_category_no",goods_category_no),
                 new OkHttpClientManager.Param("goods_price",et_goods_price.getText().toString()),
+                new OkHttpClientManager.Param("goods_des",et_goods_des.getText().toString()),
                 new OkHttpClientManager.Param("goods_publisher",mContext.getSharedPreferences("user",0).getString("user_name","")),
                 new OkHttpClientManager.Param("goods_publish_date",df.format(new Date())),
-                new OkHttpClientManager.Param("goods_des",et_goods_des.getText().toString()),
                 new OkHttpClientManager.Param("goods_trading_status","0"),
-                new OkHttpClientManager.Param("goods_trading_date","0")
+                new OkHttpClientManager.Param("goods_trading_date","0"),
+                new OkHttpClientManager.Param("goods_imgs",new Gson().toJson(images))
         });
     }
 
@@ -280,16 +298,31 @@ public class ReleaseFragment extends BaseFragment implements ExpandableListView.
     }
 
     private void setSpinSecondType(){
-//        ArrayList<String> mData=new ArrayList<>();
-//        mData=getArrayList(second_type);
         ArrayAdapter<String> adapter=new ArrayAdapter<String>(mContext,android.R.layout.simple_spinner_item, second_type);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spin_second_type.setAdapter(adapter);
-//        spin_second_type.setAdapter(new MyAdapter<String>(mData,R.layout.item_spin_goods_second_type) {
-//            @Override
-//            public void bindView(ViewHolder holder, String obj) {
-//                holder.setText(R.id.tv_spin_goods_second_type,obj);
-//            }
-//        });
+
     }
+    //上传图片
+//    private void setImages(String goods_no){
+//        ArrayList<String> images=new ArrayList<>();
+//        for (Bitmap bitmap:bitmapArrayList){
+//            images.add(Configs.bitmapToBase64(bitmap));
+//        }
+//        OkHttpClientManager.postAsyn(Configs.ADD_IMGS, new OkHttpClientManager.ResultCallback<String>() {
+//            @Override
+//            public void onError(Request request, Exception e) {
+//                Toast.makeText(getActivity(),Configs.URLERROR,Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void onResponse(String response) {
+//            }
+//        },new OkHttpClientManager.Param[]{
+//                new OkHttpClientManager.Param("goods_no",goods_no),
+//                new OkHttpClientManager.Param("img_res",new Gson().toJson(images))
+//        });
+//    }
+
+
 }

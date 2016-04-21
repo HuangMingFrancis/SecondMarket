@@ -1,6 +1,7 @@
 package com.ketangpai.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * Created by Francis on 2016/4/14.
@@ -16,10 +17,11 @@ public class GoodsInfo implements Serializable{
     private String goods_trading_status;
     private String goods_trading_date;
     private int goods_is_collect=0;
+    private String goods_imgs;
     public GoodsInfo(int goods_no, String goods_name, String goods_category_no,
                      String goods_price, String goods_des, String goods_publisher,
                      String goods_publish_date, String goods_trading_status,
-                     String goods_trading_date) {
+                     String goods_trading_date,String goods_imgs) {
         super();
         this.goods_no=goods_no;
         this.goods_name = goods_name;
@@ -30,7 +32,17 @@ public class GoodsInfo implements Serializable{
         this.goods_publish_date = goods_publish_date;
         this.goods_trading_status = goods_trading_status;
         this.goods_trading_date = goods_trading_date;
+        this.goods_imgs=goods_imgs;
     }
+
+    public String getGoods_imgs() {
+        return goods_imgs;
+    }
+
+    public void setGoods_imgs(String goods_imgs) {
+        this.goods_imgs = goods_imgs;
+    }
+
     public int getGoods_no() {
         return goods_no;
     }

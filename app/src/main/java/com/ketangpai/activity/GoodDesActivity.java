@@ -2,22 +2,30 @@ package com.ketangpai.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.ketangpai.base.BaseActivity;
 import com.ketangpai.base.Configs;
 import com.ketangpai.entity.GoodsInfo;
 import com.ketangpai.nan.ketangpai.R;
 import com.ketangpai.utils.OkHttpClientManager;
+import com.ketangpai.view.GridViewForScrollView;
 import com.squareup.okhttp.Request;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -28,6 +36,9 @@ public class GoodDesActivity extends BaseActivity implements View.OnClickListene
     private TextView tv_goods_name,tv_title,tv_goods_pricce,tv_goods_des,tv_goods_publisher,tv_goods_publish_date,tv_connect_publish;
     private ImageView iv_back;
     private Button btn_buy;
+    private GridViewForScrollView gv_img;
+    private BaseAdapter imgAdapter;
+    private ArrayList<Bitmap> bitmapArrayList;
     @Override
     protected int getContentViewId() {
         return R.layout.fragment_goods_des;
@@ -44,6 +55,8 @@ public class GoodDesActivity extends BaseActivity implements View.OnClickListene
         tv_title=(TextView)findViewById(R.id.tv_title);
         iv_back=(ImageView)findViewById(R.id.iv_back);
         btn_buy=(Button)findViewById(R.id.btn_buy);
+        gv_img=(GridViewForScrollView)findViewById(R.id.gv_img);
+
     }
 
     @Override
@@ -65,7 +78,14 @@ public class GoodDesActivity extends BaseActivity implements View.OnClickListene
             tv_connect_publish.setClickable(true);
         }
 
-
+        ArrayList<String> imgs=new ArrayList<>();
+        bitmapArrayList=new ArrayList<>();
+        imgs=new Gson().fromJson(goodsInfo.getGoods_imgs(),ArrayList.class);
+        for (String img: imgs){
+            bitmapArrayList.add(Configs.base64ToBitmap(img));
+        }
+        initImgAdapter();
+        gv_img.setAdapter(imgAdapter);
 
     }
 
@@ -128,6 +148,9 @@ public class GoodDesActivity extends BaseActivity implements View.OnClickListene
 
             @Override
             public void onResponse(String response) {
+                Message message=new Message();
+                message.obj=response;
+
                 Log.i("ming","response:　"+response);
                 if (!response.equals("0")){
                     Toast.makeText(getApplication(),"购买成功",Toast.LENGTH_SHORT).show();
@@ -142,4 +165,35 @@ public class GoodDesActivity extends BaseActivity implements View.OnClickListene
                 new OkHttpClientManager.Param("goods_trading_date",df.format(new Date()))
         });
     }
+
+    private void initImgAdapter(){
+        imgAdapter=new BaseAdapter() {
+            @Override
+            public int getCount() {
+                return bitmapArrayList.size();
+            }
+
+            @Override
+            public Object getItem(int position) {
+                return bitmapArrayList.get(position);
+            }
+
+            @Override
+            public long getItemId(int position) {
+                return position;
+            }
+
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                if (convertView==null){
+                    convertView=new ImageView(getApplication());
+                }
+                ((ImageView)convertView).setImageBitmap(bitmapArrayList.get(position));
+                ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(new ViewGroup.LayoutParams(300,300));
+                convertView.setLayoutParams(params);
+                return convertView;
+            }
+        };
+    }
+
 }
