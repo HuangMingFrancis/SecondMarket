@@ -46,7 +46,7 @@ public class MyNotificationDesActivity extends BaseActivity implements View.OnCl
 
     //view
     private EditText mSendTextEt;
-    private ImageView mSendtBtn;
+    private ImageView mSendtBtn,img_back;
     private RecyclerView mChatList;
 
     //adapter
@@ -98,6 +98,7 @@ public class MyNotificationDesActivity extends BaseActivity implements View.OnCl
     protected void initView() {
         mSendtBtn = (ImageView) findViewById(R.id.img_chat_send);
         mSendTextEt = (EditText) findViewById(R.id.et_chat_sendText);
+        img_back=(ImageView)findViewById(R.id.iv_back);
     }
 
     @Override
@@ -108,6 +109,7 @@ public class MyNotificationDesActivity extends BaseActivity implements View.OnCl
     @Override
     protected void initListener() {
         mSendtBtn.setOnClickListener(this);
+        img_back.setOnClickListener(this);
     }
 
     @Override
@@ -129,12 +131,11 @@ public class MyNotificationDesActivity extends BaseActivity implements View.OnCl
         mChatAdapter = new ChatAdapter(mContext, messageInfos);
         mChatAdapter.setUser(getSharedPreferences("user",0).getString("user_name",""));
         mChatList.setAdapter(mChatAdapter);
+        mChatList.smoothScrollToPosition(messageInfos.size());
     }
     private void setMessage(){
         messageInfos=new ArrayList<>();
-
         receiver_user_name=getIntent().getStringExtra("receiver_user_name");
-        Log.i("ming","receiver_user_name:　"+receiver_user_name);
         OkHttpClientManager.postAsyn(Configs.QUERY_MESSAGE_BY_RECEIVE_AND_SEND, new OkHttpClientManager.ResultCallback<String>() {
             @Override
             public void onError(Request request, Exception e) {
@@ -184,6 +185,9 @@ public class MyNotificationDesActivity extends BaseActivity implements View.OnCl
                 mSendTextEt.setText("");
                 initChatList();
 
+                break;
+            case R.id.iv_back:
+                finish();
                 break;
         }
     }
@@ -236,6 +240,7 @@ public class MyNotificationDesActivity extends BaseActivity implements View.OnCl
 //            reader=new BufferedReader(new InputStreamReader(socket.getInputStream()));
 //            receiveServerMessage();
             if (!data.equals("")){
+                Log.i("ming","data.equals:　　");
                 bufferedWriter.write(data+"\n");
                 bufferedWriter.flush();
             }

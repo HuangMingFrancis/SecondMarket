@@ -9,7 +9,7 @@
           android:title=""></item>
 
     <item android:id="@+id/collect"
-          android:icon="@drawable/ic_toggle_star_outline"
+          android:icon="@drawable/ic_grade"
           app:showAsAction="always"
           android:title=""></item>
     <item android:id="@+id/notify"

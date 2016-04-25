@@ -6,7 +6,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ketangpai.base.BaseFragment;
+import com.ketangpai.base.Configs;
 import com.ketangpai.nan.ketangpai.R;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by nan on 2016/3/21.
@@ -15,6 +18,8 @@ public class TAccountFragment extends BaseFragment implements View.OnClickListen
 
     RelativeLayout mUserIcon, mName, mShool;
     TextView tv_user_name,tv_user_tel;
+    String user_head="";
+    CircleImageView img_head;
 
     @Override
     protected int getLayoutId() {
@@ -28,6 +33,13 @@ public class TAccountFragment extends BaseFragment implements View.OnClickListen
         mName = (RelativeLayout) view.findViewById(R.id.ll_account_name);
         tv_user_tel=(TextView)view.findViewById(R.id.tv_user_tel);
         tv_user_name=(TextView)view.findViewById(R.id.tv_user_name);
+        img_head=(CircleImageView)view.findViewById(R.id.img_head);
+    }
+
+    @Override
+    public void onResume() {
+        initData();
+        super.onResume();
     }
 
     @Override
@@ -36,6 +48,9 @@ public class TAccountFragment extends BaseFragment implements View.OnClickListen
         if (sharedPreferences!=null){
             tv_user_name.setText(sharedPreferences.getString("user_name",""));
             tv_user_tel.setText(sharedPreferences.getString("user_tel",""));
+            user_head=sharedPreferences.getString("user_head","");
+            if (!user_head.equals(""))
+                img_head.setImageBitmap(Configs.base64ToBitmap(user_head));
         }
     }
 

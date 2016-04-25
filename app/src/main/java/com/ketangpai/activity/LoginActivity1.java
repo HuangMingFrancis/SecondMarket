@@ -19,11 +19,13 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import com.google.gson.Gson;
+import com.ketangpai.base.Configs;
 import com.ketangpai.entity.User;
 import com.ketangpai.nan.ketangpai.R;
 import com.ketangpai.utils.OkHttpClientManager;
@@ -41,7 +43,8 @@ public class LoginActivity1 extends AppCompatActivity implements View.OnClickLis
     private Animation rightOutAnimation;
     private Context mContext;
     private User user=null;
-    private AlertDialog dialog_login,dialog_register,dialog_confirm_login;
+    private AlertDialog dialog_login,dialog_register,dialog_confirm_login,dialog_loading;
+    private ProgressBar progress_login;
 
     private Handler handler=new Handler(){
         @Override
@@ -101,6 +104,7 @@ public class LoginActivity1 extends AppCompatActivity implements View.OnClickLis
 
     private void initViews() {
         mContext = this;
+        progress_login=(ProgressBar)findViewById(R.id.progress_login);
         vf_login = (ViewFlipper) findViewById(R.id.vf_login);
         tv_login = (TextView) findViewById(R.id.tv_login);
         tv_register = (TextView) findViewById(R.id.tv_register);
@@ -119,6 +123,10 @@ public class LoginActivity1 extends AppCompatActivity implements View.OnClickLis
         rightInAnimation = AnimationUtils.loadAnimation(this, R.anim.right_in);
         rightOutAnimation = AnimationUtils
                 .loadAnimation(this, R.anim.right_out);
+
+        dialog_loading=new AlertDialog.Builder(mContext).create();
+        View view=LayoutInflater.from(mContext).inflate(R.layout.dialog_loading,null);
+        dialog_loading.setView(view);
     }
 
     private void initListerer() {
@@ -196,30 +204,21 @@ public class LoginActivity1 extends AppCompatActivity implements View.OnClickLis
             Toast.makeText(this,"用户名和密码不能为空",Toast.LENGTH_SHORT).show();
             return;
         }
-        String url="http://192.168.253.1:8080/Taobao/login?name="+name+"&password="+psw;
-//        OkHttpClientManager.getAsyn(url, new OkHttpClientManager.ResultCallback<String>() {
-//            @Override
-//            public void onError(Request request, Exception e) {
-//
-//            }
-//
-//            @Override
-//            public void onResponse(String response) {
-//                Message message=new Message();
-//                message.what=LOGING;
-//                message.obj=response;
-//                handler.sendMessage(message);
-//            }
-//        });
 
-        OkHttpClientManager.postAsyn("http://192.168.253.1:8080/Taobao/login", new OkHttpClientManager.ResultCallback<String>() {
+        dialog_loading.show();
+//        progress_login.setVisibility(View.VISIBLE);
+        OkHttpClientManager.postAsyn(Configs.USER_LOGIN, new OkHttpClientManager.ResultCallback<String>() {
             @Override
             public void onError(Request request, Exception e) {
-
+                dialog_loading.dismiss();
+//                progress_login.setVisibility(View.GONE);
+                Toast.makeText(mContext, Configs.URLERROR,Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onResponse(String response) {
+                dialog_loading.dismiss();
+//                progress_login.setVisibility(View.GONE);
                 Message message=new Message();
                 message.what=LOGING;
                 message.obj=response;
@@ -245,33 +244,21 @@ public class LoginActivity1 extends AppCompatActivity implements View.OnClickLis
             Toast.makeText(getApplication(),"两次输入的密码不一致",Toast.LENGTH_SHORT).show();
             return;
         }
-        String url="http://192.168.253.1:8080/Taobao/register?name="+name+"&password="+psw+"&tel="+tel;
-//        user.setName(name);
-//        user.setPassword(psw);
-//        user.setTel(tel);
-        user=new User(0,name,psw,tel);
-//        OkHttpClientManager.getAsyn(url, new OkHttpClientManager.ResultCallback<String>() {
-//            @Override
-//            public void onError(Request request, Exception e) {
-//
-//            }
-//
-//            @Override
-//            public void onResponse(String response) {
-//                Message message=new Message();
-//                message.what=REGISTER;
-//                message.obj=response;
-//                handler.sendMessage(message);
-//            }
-//        });
-        OkHttpClientManager.postAsyn("http://192.168.253.1:8080/Taobao/register", new OkHttpClientManager.ResultCallback<String>() {
+        user=new User(0,name,psw,tel,"");
+        dialog_loading.show();
+//        progress_login.setVisibility(View.VISIBLE);
+        OkHttpClientManager.postAsyn(Configs.USER_REGISTER, new OkHttpClientManager.ResultCallback<String>() {
             @Override
             public void onError(Request request, Exception e) {
-
+                dialog_loading.dismiss();
+//                progress_login.setVisibility(View.GONE);
+                Toast.makeText(mContext, Configs.URLERROR,Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onResponse(String response) {
+                dialog_loading.dismiss();
+//                progress_login.setVisibility(View.GONE);
                 Message message=new Message();
                 message.what=REGISTER;
                 message.obj=response;
@@ -280,7 +267,8 @@ public class LoginActivity1 extends AppCompatActivity implements View.OnClickLis
         },new OkHttpClientManager.Param[]{
             new OkHttpClientManager.Param("name",name),
                 new OkHttpClientManager.Param("password",psw),
-                new OkHttpClientManager.Param("tel",tel)
+                new OkHttpClientManager.Param("tel",tel),
+                new OkHttpClientManager.Param("headimg","")
         });
     }
 
@@ -338,6 +326,8 @@ public class LoginActivity1 extends AppCompatActivity implements View.OnClickLis
             editor.putString("user_name",user.getName());
             editor.putString("user_psw",user.getPassword());
             editor.putString("user_tel",user.getTel());
+            editor.putString("user_head",user.getHeadimg());
+            editor.putString("user_id",String.valueOf(user.getId()));
             editor.commit();
         }
     }

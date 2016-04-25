@@ -138,16 +138,7 @@ public class ReleaseFragment extends BaseFragment implements ExpandableListView.
 
     @Override
     protected void initListener() {
-//        mMessageExList.setOnChildClickListener(this);
         tv_add_image.setOnClickListener(this);
-
-//        gv_img.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                ((ViewGroup)sv_release).requestDisallowInterceptTouchEvent(true);
-//                return false;
-//            }
-//        });
         spin_type.setOnItemSelectedListener(this);
         spin_second_type.setOnItemSelectedListener(this);
         btn_release.setOnClickListener(this);
@@ -191,13 +182,6 @@ public class ReleaseFragment extends BaseFragment implements ExpandableListView.
         Intent intent=new Intent(mContext, ChatActivity.class);
         startActivity(intent);
         return true;
-    }
-
-    private ArrayList getArrayList(String[] strings){
-        ArrayList<String > strings1=new ArrayList<>();
-        for (int i=0;i<strings.length;i++)
-            strings1.add(strings[i]);
-        return strings1;
     }
 
     @Override
@@ -301,28 +285,7 @@ public class ReleaseFragment extends BaseFragment implements ExpandableListView.
         ArrayAdapter<String> adapter=new ArrayAdapter<String>(mContext,android.R.layout.simple_spinner_item, second_type);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spin_second_type.setAdapter(adapter);
-
     }
-    //上传图片
-//    private void setImages(String goods_no){
-//        ArrayList<String> images=new ArrayList<>();
-//        for (Bitmap bitmap:bitmapArrayList){
-//            images.add(Configs.bitmapToBase64(bitmap));
-//        }
-//        OkHttpClientManager.postAsyn(Configs.ADD_IMGS, new OkHttpClientManager.ResultCallback<String>() {
-//            @Override
-//            public void onError(Request request, Exception e) {
-//                Toast.makeText(getActivity(),Configs.URLERROR,Toast.LENGTH_SHORT).show();
-//            }
-//
-//            @Override
-//            public void onResponse(String response) {
-//            }
-//        },new OkHttpClientManager.Param[]{
-//                new OkHttpClientManager.Param("goods_no",goods_no),
-//                new OkHttpClientManager.Param("img_res",new Gson().toJson(images))
-//        });
-//    }
 
 
 }

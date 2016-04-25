@@ -159,6 +159,11 @@ public abstract class DrawerBaseActivity extends BaseActivity implements View.On
         mUserNameText = (TextView) findViewById(R.id.tv_main_userName);
         mDrawerCourseText = (TextView) findViewById(R.id.tv_main_drawerCourse);
         mDrawerMessageText = (TextView) findViewById(R.id.tv_main_drawerMessage);
+
+        mUserNameText.setText(mContext.getSharedPreferences("user",0).getString("user_name",""));
+        String headimg=mContext.getSharedPreferences("user",0).getString("user_head","");
+        if (!headimg.equals(""))
+        mUserIconImg.setImageBitmap(Configs.base64ToBitmap(headimg));
     }
 
 
@@ -220,4 +225,9 @@ public abstract class DrawerBaseActivity extends BaseActivity implements View.On
         startActivity(intent);
     };
 
+    @Override
+    protected void onResume() {
+        initDrawerContent();
+        super.onResume();
+    }
 }

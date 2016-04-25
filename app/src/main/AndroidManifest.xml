@@ -33,6 +33,8 @@
         </activity>
         <activity android:name="com.ketangpai.activity.GoodDesActivity" />
         <activity android:name="com.ketangpai.activity.MyNotificationDesActivity" />
+        <activity android:name="com.ketangpai.activity.EditAccountActivity" />
+
     </application>
 
 </manifest>

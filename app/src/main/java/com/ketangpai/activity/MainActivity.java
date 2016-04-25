@@ -209,7 +209,6 @@ public class MainActivity extends DrawerBaseActivity implements View.OnClickList
     @Override
     protected void initToolBar() {
         super.initToolBar();
-        Log.i("ming","ershou");
         getSupportActionBar().setTitle("二手市场");
 
     }
@@ -278,47 +277,6 @@ public class MainActivity extends DrawerBaseActivity implements View.OnClickList
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.base_toolbar_menu, menu);
         return super.onCreateOptionsMenu(menu);
-    }
-
-    private void showPopupWindow(Toolbar mToolbar) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.popupwindow_notification, null, false);
-
-        //初始化itemview
-//        TextView history = (TextView) view.findViewById(R.id.tv_notification_history);
-//        TextView ignore = (TextView) view.findViewById(R.id.tv_notification_ignore);
-        RecyclerView notificationList = (RecyclerView) view.findViewById(R.id.list_notification);
-
-        //设置事件
-//        history.setOnClickListener(this);
-//        ignore.setOnClickListener(this);
-
-        //初始化view的值
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
-        notificationList.setLayoutManager(linearLayoutManager);
-        mNotificationContents = new ArrayList();
-        notificationList.setAdapter(new NotificationAdapter(mContext, mNotificationContents));
-
-        for (int i = 0; i < 10; ++i) {
-            mNotificationContents.add("11111");
-        }
-
-
-
-        final PopupWindow popupWindow = new PopupWindow(view, 200, 300, true);
-
-        popupWindow.setTouchable(true);
-        popupWindow.setTouchInterceptor(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return false;
-            }
-        });
-
-        popupWindow.setBackgroundDrawable(new ColorDrawable(0x00000000));
-
-        popupWindow.showAsDropDown(mToolbar, 50, 0);
-
-
     }
 
 

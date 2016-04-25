@@ -10,12 +10,23 @@ public class User implements Serializable{
     private String name;
     private String password;
     private String tel;
-    public User(int id,String name,String password,String tel){
+    private String headimg;
+    public User(int id,String name,String password,String tel,String headimg){
         this.id=id;
         this.name=name;
         this.password=password;
         this.tel=tel;
+        this.headimg=headimg;
     }
+
+    public void setHeadimg(String headimg) {
+        this.headimg = headimg;
+    }
+
+    public String getHeadimg() {
+        return headimg;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
