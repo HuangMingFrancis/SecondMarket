@@ -26,12 +26,7 @@
             android:layout_marginLeft="20dp"
             android:textColor="#ffffff"/>
     </LinearLayout>
-    <android.support.v7.widget.RecyclerView
-        android:layout_below="@id/llyt_title"
-        android:id="@+id/list_chat"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="10dp"></android.support.v7.widget.RecyclerView>
+
 
     <LinearLayout
         android:id="@+id/ll_chat_sendContainer"
@@ -59,7 +54,13 @@
             android:src="@drawable/ic_send_default"/>
     </LinearLayout>
 
-
+    <android.support.v7.widget.RecyclerView
+        android:layout_above="@id/ll_chat_sendContainer"
+        android:layout_below="@id/llyt_title"
+        android:id="@+id/list_chat"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp"></android.support.v7.widget.RecyclerView>
 
 
 </RelativeLayout>

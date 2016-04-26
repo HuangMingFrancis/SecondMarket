@@ -159,8 +159,8 @@ public class GoodsListFragment extends BaseFragment implements SwipeRefreshLayou
 
             tv_goods_name.setText(item.getGoods_name());
             tv_goods_price.setText(item.getGoods_price()+"¥");
-            tv_goods_publisher.setText("发布者"+item.getGoods_publisher());
-            tv_goods_publish_date.setText("发布时间"+item.getGoods_publisher());
+//            tv_goods_publisher.setText("发布者"+item.getGoods_publisher());
+            tv_goods_publish_date.setText("发布者:"+item.getGoods_publisher());
             for (CollectInfo collectInfo:collectInfos){
                 if (collectInfo.getGoods_no().equals(String.valueOf(item.getGoods_no()))){
                     iv_collect.setBackgroundResource(R.drawable.ic_toggle_star);

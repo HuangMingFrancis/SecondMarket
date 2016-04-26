@@ -64,7 +64,7 @@ public class GoodDesActivity extends BaseActivity implements View.OnClickListene
         goodsInfo=(GoodsInfo) getIntent().getSerializableExtra("goodsinfo");
         tv_goods_name.setText(goodsInfo.getGoods_name());
         tv_title.setText(goodsInfo.getGoods_name());
-        tv_goods_pricce.setText(goodsInfo.getGoods_price());
+        tv_goods_pricce.setText(goodsInfo.getGoods_price()+"¥");
         tv_goods_publisher.setText(goodsInfo.getGoods_publisher());
         tv_goods_des.setText(goodsInfo.getGoods_des());
         tv_goods_publish_date.setText(goodsInfo.getGoods_publish_date());

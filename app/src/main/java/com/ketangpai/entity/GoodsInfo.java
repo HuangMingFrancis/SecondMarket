@@ -18,10 +18,11 @@ public class GoodsInfo implements Serializable{
     private String goods_trading_date;
     private int goods_is_collect=0;
     private String goods_imgs;
+    private String goods_publisher_id;
     public GoodsInfo(int goods_no, String goods_name, String goods_category_no,
                      String goods_price, String goods_des, String goods_publisher,
                      String goods_publish_date, String goods_trading_status,
-                     String goods_trading_date,String goods_imgs) {
+                     String goods_trading_date,String goods_imgs,String goods_publisher_id) {
         super();
         this.goods_no=goods_no;
         this.goods_name = goods_name;
@@ -33,6 +34,15 @@ public class GoodsInfo implements Serializable{
         this.goods_trading_status = goods_trading_status;
         this.goods_trading_date = goods_trading_date;
         this.goods_imgs=goods_imgs;
+        this.goods_publisher_id=goods_publisher_id;
+    }
+
+    public String getGoods_publisher_id() {
+        return goods_publisher_id;
+    }
+
+    public void setGoods_publisher_id(String goods_publisher_id) {
+        this.goods_publisher_id = goods_publisher_id;
     }
 
     public String getGoods_imgs() {

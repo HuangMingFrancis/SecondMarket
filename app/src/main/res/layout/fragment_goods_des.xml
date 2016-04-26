@@ -45,27 +45,61 @@
                 android:padding="10dp"
                 >
                 <TextView
+                    android:id="@+id/tv_goods_name_hint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="名称:"
+                    android:textSize="18sp"
+                    android:layout_marginLeft="20dp"
+                    android:textColor="@color/colorPrimary"/>
+                <TextView
+                    android:layout_toRightOf="@id/tv_goods_name_hint"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/tv_goods_name"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginLeft="10dp"
                     android:text="手机"
                     android:textSize="18sp"/>
+                <TextView
+                    android:layout_below="@id/tv_goods_name_hint"
+                    android:id="@+id/tv_goods_price_hint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="价格:"
+                    android:layout_marginTop="10dp"
+                    android:textSize="18sp"
+                    android:layout_marginLeft="20dp"
+                    android:textColor="@color/colorPrimary"/>
                 <TextView
                     android:id="@+id/tv_goods_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/tv_goods_name"
+                    android:layout_toRightOf="@id/tv_goods_price_hint"
                     android:text="1000"
-                    android:layout_marginLeft="20dp"
+                    android:layout_below="@id/tv_goods_name"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
                     android:textSize="18sp"/>
+                <TextView
+                    android:id="@+id/tv_goods_des_hint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_goods_price_hint"
+                    android:layout_marginLeft="20dp"
+                    android:text="描述:"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="18sp"
+                    android:layout_marginTop="10dp"
+                    />
                 <TextView
                     android:id="@+id/tv_goods_des"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/tv_goods_name"
-                    android:layout_marginLeft="20dp"
-                    android:text="介绍"
+                    android:layout_below="@id/tv_goods_price_hint"
+                    android:layout_marginLeft="10dp"
+                    android:text="很好"
+                    android:layout_marginRight="20dp"
+                    android:layout_toRightOf="@id/tv_goods_des_hint"
                     android:textSize="18sp"
                     android:layout_marginTop="10dp"
                     />
@@ -73,6 +107,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tv_goods_des"
+                    android:layout_alignParentRight="true"
+                    android:text="发布者:"
+                    android:textColor="@color/colorPrimary"
+                    android:id="@+id/tv_goods_publisher_hint"
+                    android:textSize="18sp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="20dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_goods_publisher_hint"
                     android:layout_alignParentRight="true"
                     android:text="ming"
                     android:id="@+id/tv_goods_publisher"
@@ -83,6 +128,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tv_goods_publisher"
+                    android:layout_alignParentRight="true"
+                    android:text="发布日期:"
+                    android:textColor="@color/colorPrimary"
+                    android:id="@+id/tv_goods_publish_date_hint"
+                    android:textSize="18sp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="20dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_goods_publish_date_hint"
                     android:layout_alignParentRight="true"
                     android:text="ming"
                     android:id="@+id/tv_goods_publish_date"

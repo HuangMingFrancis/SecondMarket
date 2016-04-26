@@ -1,11 +1,13 @@
 package com.ketangpai.fragment;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.app.AlertDialog;
 import android.util.Base64;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -246,35 +248,47 @@ public class ReleaseFragment extends BaseFragment implements ExpandableListView.
             showToast("商品价格不能为空");
             return;
         }
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
-        ArrayList<String> images=new ArrayList<>();
-        for (Bitmap bitmap:bitmapArrayList){
-            images.add(Configs.bitmapToBase64(bitmap));
-        }
-        OkHttpClientManager.postAsyn(Configs.RELEASE_GOODS, new OkHttpClientManager.ResultCallback<String>() {
+        AlertDialog.Builder builder=new AlertDialog.Builder(mContext);
+        builder.setTitle("发布商品");
+        builder.setMessage("是否确定发布该商品");
+        builder.setNegativeButton("取消",null);
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
             @Override
-            public void onError(Request request, Exception e) {
-                Toast.makeText(getActivity(),Configs.URLERROR,Toast.LENGTH_SHORT).show();
-            }
+            public void onClick(DialogInterface dialog, int which) {
+                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+                ArrayList<String> images=new ArrayList<>();
+                for (Bitmap bitmap:bitmapArrayList){
+                    images.add(Configs.bitmapToBase64(bitmap));
+                }
+                OkHttpClientManager.postAsyn(Configs.RELEASE_GOODS, new OkHttpClientManager.ResultCallback<String>() {
+                    @Override
+                    public void onError(Request request, Exception e) {
+                        Toast.makeText(getActivity(),Configs.URLERROR,Toast.LENGTH_SHORT).show();
+                    }
 
-            @Override
-            public void onResponse(String response) {
-                Message message=new Message();
-                message.what=INSERTGOODS;
-                message.obj=response;
-                mHandler.sendMessage(message);
+                    @Override
+                    public void onResponse(String response) {
+                        Message message=new Message();
+                        message.what=INSERTGOODS;
+                        message.obj=response;
+                        mHandler.sendMessage(message);
+                    }
+                },new OkHttpClientManager.Param[]{
+                        new OkHttpClientManager.Param("goods_name",et_goods_name.getText().toString()),
+                        new OkHttpClientManager.Param("goods_category_no",goods_category_no),
+                        new OkHttpClientManager.Param("goods_price",et_goods_price.getText().toString()),
+                        new OkHttpClientManager.Param("goods_des",et_goods_des.getText().toString()),
+                        new OkHttpClientManager.Param("goods_publisher",mContext.getSharedPreferences("user",0).getString("user_name","")),
+                        new OkHttpClientManager.Param("goods_publish_date",df.format(new Date())),
+                        new OkHttpClientManager.Param("goods_trading_status","0"),
+                        new OkHttpClientManager.Param("goods_trading_date","0"),
+                        new OkHttpClientManager.Param("goods_imgs",new Gson().toJson(images)),
+                        new OkHttpClientManager.Param("goods_publisher_id",mContext.getSharedPreferences("user",0).getString("user_id",""))
+                });
             }
-        },new OkHttpClientManager.Param[]{
-                new OkHttpClientManager.Param("goods_name",et_goods_name.getText().toString()),
-                new OkHttpClientManager.Param("goods_category_no",goods_category_no),
-                new OkHttpClientManager.Param("goods_price",et_goods_price.getText().toString()),
-                new OkHttpClientManager.Param("goods_des",et_goods_des.getText().toString()),
-                new OkHttpClientManager.Param("goods_publisher",mContext.getSharedPreferences("user",0).getString("user_name","")),
-                new OkHttpClientManager.Param("goods_publish_date",df.format(new Date())),
-                new OkHttpClientManager.Param("goods_trading_status","0"),
-                new OkHttpClientManager.Param("goods_trading_date","0"),
-                new OkHttpClientManager.Param("goods_imgs",new Gson().toJson(images))
         });
+        builder.create().show();
+
     }
 
     private void showToast(String msg){

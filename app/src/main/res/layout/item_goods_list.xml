@@ -7,6 +7,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="手机"
+        android:textSize="18sp"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="20dp"
         />
@@ -15,6 +16,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="1000¥"
+        android:textSize="18sp"
         android:layout_toRightOf="@id/tv_goods_name"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="20dp"/>
@@ -30,6 +32,7 @@
 
 
     <TextView
+        android:textSize="18sp"
         android:id="@+id/tv_goods_publish_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -39,10 +42,12 @@
         android:layout_marginRight="20dp"
         android:layout_marginTop="30dp"/>
     <TextView
+        android:visibility="gone"
         android:id="@+id/tv_goods_publisher"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="发布者:"
+        android:textSize="18sp"
         android:layout_below="@id/tv_goods_name"
         android:layout_toLeftOf="@id/tv_goods_publish_date"
         android:layout_marginRight="20dp"
@@ -52,7 +57,7 @@
         android:layout_height="1dp"
         android:background="#dddddd"
         android:layout_below="@id/tv_goods_publish_date"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="15dp"/>
 
 
 </RelativeLayout>

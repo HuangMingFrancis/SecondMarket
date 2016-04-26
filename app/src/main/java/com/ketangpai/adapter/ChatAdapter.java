@@ -2,9 +2,11 @@ package com.ketangpai.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.ketangpai.base.BaseAdapter;
+import com.ketangpai.base.Configs;
 import com.ketangpai.entity.MessageInfo;
 import com.ketangpai.nan.ketangpai.R;
 
@@ -17,6 +19,16 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 public class ChatAdapter extends BaseAdapter<MessageInfo> {
     private String user;
+    private String send_user_head;
+    private String receive_user_head;
+
+    public void setSend_user_head(String send_user_head) {
+        this.send_user_head = send_user_head;
+    }
+
+    public void setReceive_user_head(String receive_user_head) {
+        this.receive_user_head = receive_user_head;
+    }
 
     public void setUser(String user) {
         this.user = user;
@@ -68,10 +80,14 @@ public class ChatAdapter extends BaseAdapter<MessageInfo> {
              UserImg= (CircleImageView) holder.getViewById(R.id.img_chat_acceptor_userIcon);
              text= (TextView) holder.getViewById(R.id.tv_chat_acceptor_text);
             text.setText(item.getMessage_content());
+            if (!send_user_head.equals(""))
+                UserImg.setImageBitmap(Configs.base64ToBitmap(send_user_head));
         }else{
             UserImg= (CircleImageView) holder.getViewById(R.id.img_chat_receiver_userIcon);
             text= (TextView) holder.getViewById(R.id.tv_chat_receiver_text);
             text.setText(item.getMessage_content());
+            if (!receive_user_head.equals(""))
+                UserImg.setImageBitmap(Configs.base64ToBitmap(receive_user_head));
         }
 
         //初始化view的值

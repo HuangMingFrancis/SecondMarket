@@ -19,6 +19,7 @@ import com.ketangpai.base.BaseAdapter;
 import com.ketangpai.base.BaseFragment;
 import com.ketangpai.base.Configs;
 import com.ketangpai.entity.MessageInfo;
+import com.ketangpai.entity.User;
 import com.ketangpai.listener.OnItemClickListener;
 import com.ketangpai.listener.OnItemLongClickListener;
 import com.ketangpai.nan.ketangpai.R;
@@ -38,6 +39,8 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 /**
  * Created by Francis on 2016/4/16.
  */
@@ -45,7 +48,8 @@ public class MyNotifyFragment extends BaseFragment implements View.OnClickListen
     private RecyclerView recycler_my_notify;
     private SwipeRefreshLayout swipe_notify_list;
     private TextView tv_hint_my_notify;
-    private ArrayList<MessageInfo> messageInfos,data;
+    private ArrayList<MessageInfo> messageInfos,data,data1;
+    private ArrayList<User> users;
     private MessagesInfoAdapter messagesInfoAdapter;
     @Override
     protected int getLayoutId() {
@@ -85,37 +89,6 @@ public class MyNotifyFragment extends BaseFragment implements View.OnClickListen
     protected void loadData() {
 
     }
-    protected void connectServerWithTCPSocket() {
-        Socket socket=null;
-        BufferedWriter bufferedWriter=null;
-        BufferedReader reader=null;
-        try {
-            Log.i("ming","hello1 ");
-            socket=new Socket("192.168.253.1",2133);
-            Log.i("ming","hello2 ");
-            bufferedWriter=new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-            reader=new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            bufferedWriter.write("hello"+"\n");
-            bufferedWriter.flush();
-            String serveMsg=reader.readLine();
-            Log.i("ming","getServerMsg: "+serveMsg);
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }finally {
-            try {
-                reader.close();
-                bufferedWriter.close();
-                socket.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-
-    }
-
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -134,6 +107,7 @@ public class MyNotifyFragment extends BaseFragment implements View.OnClickListen
 
             @Override
             public void onResponse(String response) {
+                Log.i("ming","response:  "+response);
                 try {
                     JSONArray jsonArray = new JSONArray(response);
                     JSONObject jsonObject;
@@ -143,7 +117,6 @@ public class MyNotifyFragment extends BaseFragment implements View.OnClickListen
                         messageInfo=new Gson().fromJson(jsonObject.toString(),MessageInfo.class);
                         messageInfos.add(messageInfo);
                     }
-                    Log.i("ming","messageInfos:　"+messageInfos.size());
                     if (!(messageInfos.size()>0)){
                         initMessagesList();
                         return;
@@ -160,8 +133,8 @@ public class MyNotifyFragment extends BaseFragment implements View.OnClickListen
                         if (!exist)
                             data.add(messageInfo);
                     }
-                    Log.i("ming","data:  "+data.size());
-                    initMessagesList();
+                    initMessagesHead();
+//                    initMessagesList();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -170,6 +143,42 @@ public class MyNotifyFragment extends BaseFragment implements View.OnClickListen
                 getActivity().getSharedPreferences("user",0).getString("user_name","")));
 
     }
+    //查找用户头像
+    private void initMessagesHead(){
+        data1=new ArrayList<>();
+        users=new ArrayList<>();
+        if (data.size()<=0){
+            tv_hint_my_notify.setVisibility(View.VISIBLE);
+            recycler_my_notify.setVisibility(View.GONE);
+            return;
+        }
+        else{
+            for (int i=0;i<data.size();i++){
+                final MessageInfo messageInfo=data.get(i);
+                Log.i("ming","send_user_name:  "+messageInfo.getSend_user_id());
+                OkHttpClientManager.postAsyn(Configs.QUERY_USER_HEAD, new OkHttpClientManager.ResultCallback<String>() {
+                    @Override
+                    public void onError(Request request, Exception e) {
+
+                    }
+
+                    @Override
+                    public void onResponse(String response) {
+                        Log.i("ming","head response:  " +response);
+                        User user=new Gson().fromJson(response,User.class);
+                        users.add(user);
+                        messageInfo.setUser_head(user.getHeadimg());
+                        data1.add(messageInfo);
+//                        messageInfo.setUser_head(user.getHeadimg());
+                        if (users.size()==data.size()){
+                            initMessagesList();
+                        }
+                    }
+                },new OkHttpClientManager.Param("send_user_id",data.get(i).getSend_user_id()));
+            }
+        }
+    }
+
 
     private void initMessagesList(){
         swipe_notify_list.setRefreshing(false);
@@ -182,7 +191,7 @@ public class MyNotifyFragment extends BaseFragment implements View.OnClickListen
             tv_hint_my_notify.setVisibility(View.GONE);
             recycler_my_notify.setVisibility(View.VISIBLE);
 
-            messagesInfoAdapter=new MessagesInfoAdapter(getActivity(),data);
+            messagesInfoAdapter=new MessagesInfoAdapter(getActivity(),data1);
             recycler_my_notify.setLayoutManager(new LinearLayoutManager(getActivity()));
             recycler_my_notify.setAdapter(messagesInfoAdapter);
 
@@ -190,7 +199,9 @@ public class MyNotifyFragment extends BaseFragment implements View.OnClickListen
                 @Override
                 public void onItemClick(View view, int position) {
                     Intent intent=new Intent(getActivity(), MyNotificationDesActivity.class);
-                    intent.putExtra("receiver_user_name", data.get(position).getSend_user_name());
+                    intent.putExtra("receiver_user_name", data1.get(position).getSend_user_name());
+                    intent.putExtra("send_user_head",data1.get(position).getUser_head());
+                    intent.putExtra("message",data1.get(position));
                     getActivity().startActivity(intent);
                 }
             });
@@ -204,7 +215,7 @@ public class MyNotifyFragment extends BaseFragment implements View.OnClickListen
                     builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            deleteMyMessage(data.get(position));
+                            deleteMyMessage(data1.get(position));
                         }
                     });
                     builder.create().show();
@@ -234,13 +245,18 @@ public class MyNotifyFragment extends BaseFragment implements View.OnClickListen
         @Override
         protected void bindData(ViewHolder holder, int position, MessageInfo item) {
             TextView tv_message_user_name,tv_message_date,tv_message_content;
+            CircleImageView img_head;
             tv_message_user_name=(TextView) holder.getViewById(R.id.tv_message_user_name);
             tv_message_date=(TextView)holder.getViewById(R.id.tv_message_date);
             tv_message_content=(TextView)holder.getViewById(R.id.tv_message_content);
+            img_head=(CircleImageView)holder.getViewById(R.id.img_head);
 
             tv_message_user_name.setText(item.getSend_user_name());
             tv_message_date.setText(item.getMessage_date());
             tv_message_content.setText(item.getMessage_content());
+            Log.i("ming","user_head:　"+item.getUser_head());
+            if (!item.getUser_head().equals(""))
+                img_head.setImageBitmap(Configs.base64ToBitmap(item.getUser_head()));
         }
     }
 

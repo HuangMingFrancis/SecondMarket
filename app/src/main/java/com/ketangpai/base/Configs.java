@@ -68,7 +68,10 @@ public class Configs {
     public static final String USER_REGISTER=URL+"register";
     //修改用户信息
     public static final String EDIT_ACCOUNT=URL+"editaccount";
-
+    //查找用户头像
+    public static final String QUERY_USER_HEAD=URL+"queryuserhead";
+    //将聊天记录保存到数据库
+    public static final String ADD_MESSAGE=URL+"insertmessage";
 
     //请求出错
     public static final String URLERROR="网络请求出错,请检查!";
