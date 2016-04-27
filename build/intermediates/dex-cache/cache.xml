@@ -1,3 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<items version="2" />
+<items version="2" >
 
+    <item
+        jar="C:\Users\Francis\.gradle\caches\modules-2\files-2.1\com.squareup.okhttp\okhttp\2.4.0\40340c0748190fe897baf7bffbc1b282734294e5\okhttp-2.4.0.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="40340c0748190fe897baf7bffbc1b282734294e5">
+        <dex dex="D:\Users\Francis\OtherProjects\Ketangpai\app\build\intermediates\transforms\dex\debug\folders\1000\10\okhttp-2.4.0_01ac17084690b113d425f386f04fb718618e862d\classes.dex" />
+    </item>
+    <item
+        jar="D:\Users\Francis\OtherProjects\Ketangpai\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.1.1\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="6cbc7773921fcfedbe55657578f0cbfe614778dc">
+        <dex dex="D:\Users\Francis\OtherProjects\Ketangpai\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-v4-23.1.1_f72870ed8f772298ed24382e6d98b6a1ab5b982c\classes.dex" />
+    </item>
+    <item
+        jar="D:\Program Files\Android\android-sdk\extras\android\m2repository\com\android\support\support-annotations\23.1.1\support-annotations-23.1.1.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="8d680ba5a623724d1fb0e81c36a790f023a6cede">
+        <dex dex="D:\Users\Francis\OtherProjects\Ketangpai\app\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-23.1.1_2ef9388cf1ab7f8b4d8d2671c2b534f6087a8a33\classes.dex" />
+    </item>
+    <item
+        jar="D:\Users\Francis\OtherProjects\Ketangpai\app\build\intermediates\exploded-aar\com.android.support\cardview-v7\23.1.1\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="5e412e954a24c5310a459c09870e4e2081aceb03">
+        <dex dex="D:\Users\Francis\OtherProjects\Ketangpai\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-cardview-v7-23.1.1_66ded8900ea88d3a39d59bd3545969cb1799873c\classes.dex" />
+    </item>
+    <item
+        jar="D:\Users\Francis\OtherProjects\Ketangpai\app\build\intermediates\exploded-aar\com.android.support\design\23.1.1\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="379471b2bd17d9737c050345c08e8c7d16589784">
+        <dex dex="D:\Users\Francis\OtherProjects\Ketangpai\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-design-23.1.1_670e58686d2d1a9277453d3e3261bae28fc9f352\classes.dex" />
+    </item>
+    <item
+        jar="D:\Users\Francis\OtherProjects\Ketangpai\app\build\intermediates\exploded-aar\de.hdodenhof\circleimageview\2.0.0\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="031e8b3ab2df4ab43b1017f84417d7e10dfbb8d2">
+        <dex dex="D:\Users\Francis\OtherProjects\Ketangpai\app\build\intermediates\transforms\dex\debug\folders\1000\10\de.hdodenhof-circleimageview-2.0.0_c354dccd519b6bfae3a9898caf213e6c7d1c3bd4\classes.dex" />
+    </item>
+    <item
+        jar="D:\Program Files\Android\android-studio\gradle\m2repository\com\google\code\gson\gson\2.2.4\gson-2.2.4.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="a60a5e993c98c864010053cb901b7eab25306568">
+        <dex dex="D:\Users\Francis\OtherProjects\Ketangpai\app\build\intermediates\transforms\dex\debug\folders\1000\10\gson-2.2.4_b7ee8add128d8fc27ec3efa175324e4fa5eb54bd\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Francis\.gradle\caches\modules-2\files-2.1\com.squareup.okio\okio\1.5.0\bb7d4d96e780e8ef4f275c7d8dd3ef2883ddf99a\okio-1.5.0.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="bb7d4d96e780e8ef4f275c7d8dd3ef2883ddf99a">
+        <dex dex="D:\Users\Francis\OtherProjects\Ketangpai\app\build\intermediates\transforms\dex\debug\folders\1000\10\okio-1.5.0_bd201ab6f723a51da300a37debe7ec28a4a151c6\classes.dex" />
+    </item>
+    <item
+        jar="D:\Users\Francis\OtherProjects\Ketangpai\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\23.1.1\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="09c5e804bc67fc0580360043dff067df574a60d4">
+        <dex dex="D:\Users\Francis\OtherProjects\Ketangpai\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-recyclerview-v7-23.1.1_69d4335dfe5b07a1f839bfa282402354f518ccc3\classes.dex" />
+    </item>
+    <item
+        jar="D:\Users\Francis\OtherProjects\Ketangpai\app\build\intermediates\exploded-aar\com.shamanland\fab\0.0.8\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="e58f2fb4991259b0d4e78c3b3dd686ec58736a29">
+        <dex dex="D:\Users\Francis\OtherProjects\Ketangpai\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.shamanland-fab-0.0.8_dbb6770347ba6395407fd0cb55ca3bc84917076b\classes.dex" />
+    </item>
+    <item
+        jar="D:\Users\Francis\OtherProjects\Ketangpai\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.1.1\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="5c5699834e9722f1c288fea2de82725d078ba127">
+        <dex dex="D:\Users\Francis\OtherProjects\Ketangpai\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-appcompat-v7-23.1.1_4244b2fffad8ee27c85e4a40a6083b632c0d6d1e\classes.dex" />
+    </item>
+    <item
+        jar="D:\Users\Francis\OtherProjects\Ketangpai\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="d1e79cf42584e04f8295578772512eea2ddcfe54">
+        <dex dex="D:\Users\Francis\OtherProjects\Ketangpai\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_3b08b3c62ad77cacc72d176a6297e2d04ab61be3\classes.dex" />
+    </item>
+    <item
+        jar="D:\Users\Francis\OtherProjects\Ketangpai\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.1.1\jars\libs\internal_impl-23.1.1.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="a4de9c81ae239414e1ed0f86441b02abaf29bca9">
+        <dex dex="D:\Users\Francis\OtherProjects\Ketangpai\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-23.1.1_a18bebd42f18ba77a952152eef8d8da4b9d7f333\classes.dex" />
+    </item>
+    <item
+        jar="D:\Users\Francis\OtherProjects\Ketangpai\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="0336f024307f88b79cd9a970ba2fbdd6c0d878a8">
+        <dex dex="D:\Users\Francis\OtherProjects\Ketangpai\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_1cb79935fdbe10992bf9f695281a45f8f31435f6\classes.dex" />
+    </item>
+
+</items>

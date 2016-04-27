@@ -226,7 +226,7 @@ public class MyNotificationDesActivity extends BaseActivity implements View.OnCl
             public void run() {
                 try {
                     Log.i("ming","socket before");
-                    socket=new Socket("192.168.253.1",2133);
+                    socket=new Socket(Configs.SOCKET,2133);
                     Log.i("ming","socket after  "+socket.hashCode());
                 } catch (IOException e) {
                     e.printStackTrace();

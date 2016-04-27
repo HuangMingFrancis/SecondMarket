@@ -247,6 +247,7 @@ public class LoginActivity1 extends AppCompatActivity implements View.OnClickLis
         user=new User(0,name,psw,tel,"");
         dialog_loading.show();
 //        progress_login.setVisibility(View.VISIBLE);
+        Log.i("ming",name+"  "+psw+"  "+tel);
         OkHttpClientManager.postAsyn(Configs.USER_REGISTER, new OkHttpClientManager.ResultCallback<String>() {
             @Override
             public void onError(Request request, Exception e) {
@@ -257,6 +258,7 @@ public class LoginActivity1 extends AppCompatActivity implements View.OnClickLis
 
             @Override
             public void onResponse(String response) {
+                Log.i("ming","register:  "+response);
                 dialog_loading.dismiss();
 //                progress_login.setVisibility(View.GONE);
                 Message message=new Message();

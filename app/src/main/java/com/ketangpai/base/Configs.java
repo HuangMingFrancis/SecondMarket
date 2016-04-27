@@ -37,7 +37,7 @@ public class Configs {
         public static final int PHOTO_REQUEST_CUT = 3;// 结果
     }
     //基本地址
-    public static final String URL="http://115.28.152.201:8080/SecondMarket/";
+    public static final String URL="http://115.28.152.201:8080/SeondMarket/";
     //获得收藏者
     public static final String GETCOLLECT=URL+"queryallcollect";
     //添加收藏者
@@ -73,7 +73,9 @@ public class Configs {
     //将聊天记录保存到数据库
     public static final String ADD_MESSAGE=URL+"insertmessage";
 
-    //请求出错
+    public static final String SOCKET="192.168.253.1";
+
+    //请求出错115.28.152.201
     public static final String URLERROR="网络请求出错,请检查!";
 
     /**
