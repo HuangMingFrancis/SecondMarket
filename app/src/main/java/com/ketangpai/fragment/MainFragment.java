@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ketangpai.activity.MainActivity;
@@ -19,6 +20,7 @@ public class MainFragment extends BaseFragment implements View.OnClickListener {
 
     //    view
     private TextView mCourseText, mMessageText;
+    private LinearLayout llyt_second_market,llyt_release;
 
 
     //变量
@@ -45,6 +47,8 @@ public class MainFragment extends BaseFragment implements View.OnClickListener {
     protected void initView() {
         mCourseText = (TextView) view.findViewById(R.id.tv_main_course);
         mMessageText = (TextView) view.findViewById(R.id.tv_main_message);
+        llyt_release=(LinearLayout)view.findViewById(R.id.llyt_release);
+        llyt_second_market=(LinearLayout)view.findViewById(R.id.llyt_second_market);
     }
 
     @Override
@@ -56,6 +60,8 @@ public class MainFragment extends BaseFragment implements View.OnClickListener {
     protected void initListener() {
         mCourseText.setOnClickListener(this);
         mMessageText.setOnClickListener(this);
+        llyt_release.setOnClickListener(this);
+        llyt_second_market.setOnClickListener(this);
     }
 
     @Override
@@ -77,10 +83,16 @@ public class MainFragment extends BaseFragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.tv_main_course:
+//            case R.id.tv_main_course:
+//                changeText(DrawerBaseActivity.COURSE);
+//                break;
+//            case R.id.tv_main_message:
+//                changeText(DrawerBaseActivity.MESSAGE);
+//                break;
+            case R.id.llyt_second_market:
                 changeText(DrawerBaseActivity.COURSE);
                 break;
-            case R.id.tv_main_message:
+            case R.id.llyt_release:
                 changeText(DrawerBaseActivity.MESSAGE);
                 break;
 

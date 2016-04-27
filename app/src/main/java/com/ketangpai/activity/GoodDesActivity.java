@@ -19,6 +19,8 @@ import com.google.gson.Gson;
 import com.ketangpai.base.BaseActivity;
 import com.ketangpai.base.Configs;
 import com.ketangpai.entity.GoodsInfo;
+import com.ketangpai.entity.MessageInfo;
+import com.ketangpai.entity.User;
 import com.ketangpai.nan.ketangpai.R;
 import com.ketangpai.utils.OkHttpClientManager;
 import com.ketangpai.view.GridViewForScrollView;
@@ -133,9 +135,29 @@ public class GoodDesActivity extends BaseActivity implements View.OnClickListene
     }
     //联系卖家
     private void connectPublish(){
-        Intent intent=new Intent(this,MyNotificationDesActivity.class);
+        final Intent intent=new Intent(this,MyNotificationDesActivity.class);
         intent.putExtra("receiver_user_name",goodsInfo.getGoods_publisher());
-        startActivity(intent);
+        MessageInfo messageInfo=new MessageInfo();
+        messageInfo.setReceive_user_id(getSharedPreferences("user",0).getString("user_id",""));
+        messageInfo.setSend_user_id(goodsInfo.getGoods_publisher_id());
+        messageInfo.setSend_user_name(getSharedPreferences("user",0).getString("user_name",""));
+        messageInfo.setReceive_user_name(goodsInfo.getGoods_publisher());
+        intent.putExtra("message",messageInfo);
+        OkHttpClientManager.postAsyn(Configs.QUERY_USER_HEAD, new OkHttpClientManager.ResultCallback<String>() {
+            @Override
+            public void onError(Request request, Exception e) {
+
+            }
+
+            @Override
+            public void onResponse(String response) {
+                Log.i("ming","head response:  " +response);
+                User user=new Gson().fromJson(response,User.class);
+                intent.putExtra("send_user_head",user.getHeadimg());
+                startActivity(intent);
+            }
+        },new OkHttpClientManager.Param("send_user_id",goodsInfo.getGoods_publisher_id()));
+
     }
     //改变商品的交易状态,让其不再显示在所有列表中
     private void updateGoodsTradingStatus(){

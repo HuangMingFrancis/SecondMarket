@@ -218,7 +218,8 @@ public class GoodsListFragment extends BaseFragment implements SwipeRefreshLayou
             }
         },new OkHttpClientManager.Param[]{
                 new OkHttpClientManager.Param("goods_no",String.valueOf(goodsInfo.getGoods_no())),
-                new OkHttpClientManager.Param("user_name",getActivity().getSharedPreferences("user",0).getString("user_name",""))
+                new OkHttpClientManager.Param("user_name",getActivity().getSharedPreferences("user",0).getString("user_name","")),
+                new OkHttpClientManager.Param("user_id",getActivity().getSharedPreferences("user",0).getString("user_id",""))
         });
 
     }
@@ -235,7 +236,8 @@ public class GoodsListFragment extends BaseFragment implements SwipeRefreshLayou
             }
         },new OkHttpClientManager.Param[]{
                 new OkHttpClientManager.Param("goods_no",String.valueOf(goodsInfo.getGoods_no())),
-                new OkHttpClientManager.Param("user_name",getActivity().getSharedPreferences("user",0).getString("user_name",""))
+                new OkHttpClientManager.Param("user_name",getActivity().getSharedPreferences("user",0).getString("user_name","")),
+                new OkHttpClientManager.Param("user_id",getActivity().getSharedPreferences("user",0).getString("user_id",""))
         });
 
     }
@@ -265,7 +267,7 @@ public class GoodsListFragment extends BaseFragment implements SwipeRefreshLayou
                     e.printStackTrace();
                 }
             }
-        },new OkHttpClientManager.Param("user_name",getActivity().getSharedPreferences("user",0).getString("user_name","")));
+        },new OkHttpClientManager.Param("user_id",getActivity().getSharedPreferences("user",0).getString("user_id","")));
     }
 
     @Override

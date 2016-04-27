@@ -10,31 +10,57 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="@android:color/white"
-        android:drawableTop="@mipmap/ic_launcher"
         android:orientation="horizontal"
         >
-
-        <TextView
-            android:id="@+id/tv_main_course"
+        <LinearLayout
+            android:id="@+id/llyt_second_market"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:drawableTop="@mipmap/ic_launcher"
+            android:orientation="vertical"
             android:gravity="center"
-            android:text="二手市场"
-            android:textColor="@color/colorBottomTextSelected"
-            android:textSize="14sp"/>
-
-        <TextView
-            android:id="@+id/tv_main_message"
+            >
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="5dp"
+                android:src="@drawable/mini_authorize_logo"
+                android:layout_marginBottom="5dp"/>
+            <TextView
+                android:id="@+id/tv_main_course"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="二手市场"
+                android:textColor="@color/colorBottomTextSelected"
+                android:textSize="14sp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/llyt_release"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:drawableTop="@mipmap/ic_launcher"
+            android:orientation="vertical"
             android:gravity="center"
-            android:text="发布"
-            android:textColor="@color/colorBottomTextNoSelected"
-            android:textSize="14sp"/>
+            >
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="5dp"
+                android:src="@drawable/mini_bracelet"
+                android:layout_marginBottom="5dp"/>
+            <TextView
+                android:id="@+id/tv_main_message"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="发布"
+                android:textColor="@color/colorBottomTextNoSelected"
+                android:textSize="14sp"/>
+        </LinearLayout>
+
+
+
 
     </LinearLayout>
 

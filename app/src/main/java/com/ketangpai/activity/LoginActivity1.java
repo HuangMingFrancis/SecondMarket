@@ -113,9 +113,9 @@ public class LoginActivity1 extends AppCompatActivity implements View.OnClickLis
     private void initDatas() {
         detector = new GestureDetector(this);
 
-        vf_login.addView(getImageView(R.drawable.beijing1));
-        vf_login.addView(getImageView(R.drawable.beijing2));
-        vf_login.addView(getImageView(R.drawable.beijing3));
+        vf_login.addView(getImageView(R.drawable.splash));
+        vf_login.addView(getImageView(R.drawable.img_guide_item_one));
+        vf_login.addView(getImageView(R.drawable.img_guide_item_two));
 
         // 动画效果
         leftInAnimation = AnimationUtils.loadAnimation(this, R.anim.left_in);

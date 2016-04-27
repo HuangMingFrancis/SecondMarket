@@ -9,6 +9,15 @@ public class CollectInfo implements Serializable{
     private int collect_no;
     private String goods_no;
     private String user_name;
+    private String user_id;
+
+    public String getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(String user_id) {
+        this.user_id = user_id;
+    }
 
     public void setCollect_no(int collect_no) {
         this.collect_no = collect_no;

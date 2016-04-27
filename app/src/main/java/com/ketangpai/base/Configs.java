@@ -37,7 +37,7 @@ public class Configs {
         public static final int PHOTO_REQUEST_CUT = 3;// 结果
     }
     //基本地址
-    public static final String URL="http://192.168.253.1:8080/Taobao/";
+    public static final String URL="http://115.28.152.201:8080/SecondMarket/";
     //获得收藏者
     public static final String GETCOLLECT=URL+"queryallcollect";
     //添加收藏者
